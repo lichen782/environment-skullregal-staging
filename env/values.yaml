@@ -33,30 +33,30 @@ global:
     hostName: "activiti-cloud-gateway.jx-staging.35.229.237.50.nip.io"
     host: "activiti-cloud-gateway.jx-staging.35.229.237.50.nip.io"
 
-
-infrastructure:
-  activiti-keycloak:
+activiti-keycloak:
+  enabled: false
+  ingress:
+    enabled: true
+  keycloak:
+    enabled: true
     keycloak:
-      keycloak:
-        ingress:
-          enabled: true
-          path: /
-          hosts:
-            - "activiti-keycloak.jx-staging.35.229.237.50.nip.io"
-          annotations:
-            kubernetes.io/ingress.class: nginx
-            nginx.ingress.kubernetes.io/rewrite-target: /
-            nginx.ingress.kubernetes.io/configuration-snippet: |
-              add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, PUT, PATCH, DELETE";
-              add_header Access-Control-Allow-Credentials true;
-              add_header Access-Control-Allow-Headers "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization";
-  activiti-cloud-gateway:
-    ingress:
-      enabled: true
-      hostName: "activiti-cloud-gateway.jx-staging.35.229.237.50.nip.io"
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/rewrite-target: /
-        nginx.ingress.kubernetes.io/enable-cors: true
-        nginx.ingress.kubernetes.io/cors-allow-headers: "*"
-        nginx.ingress.kubernetes.io/x-forwarded-prefix: true
+      preStartScript: |
+        /opt/jboss/keycloak/bin/add-user.sh -u admin -p admin
+        /opt/jboss/keycloak/bin/add-user-keycloak.sh -r master -u admin -p admin
+        cp /realm/activiti-realm.json .
+        sed -i 's/placeholder.com/*/g' activiti-realm.json
+  
+activiti-cloud-gateway:
+  service:
+    name: activiti-cloud-gateway
+  image:
+    repository: activiti/activiti-cloud-gateway
+    #tag: 7.0.0.SR1
+    pullPolicy: IfNotPresent
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-headers: "*"
+      nginx.ingress.kubernetes.io/x-forwarded-prefix: "true"

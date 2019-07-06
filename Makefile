@@ -10,6 +10,7 @@ build: clean
 	helm repo add releases ${CHART_REPO}
 	helm repo add jenkins-x http://chartmuseum.jenkins-x.io
 	helm repo add activiti-cloud-charts https://activiti.github.io/activiti-cloud-charts/
+	helm repo add activiti-cloud-helm-charts https://activiti.github.io/activiti-cloud-helm-charts/
 	helm dependency build ${DIR}
 	helm lint ${DIR}
 
