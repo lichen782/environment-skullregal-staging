@@ -42,6 +42,7 @@ infrastructure:
               add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, PUT, PATCH, DELETE";
               add_header Access-Control-Allow-Credentials true;
               add_header Access-Control-Allow-Headers "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization";
+        extraArgs: -Dkeycloak.import=/realm/activiti-realm.json
   activiti-cloud-gateway:
     ingress:
       enabled: true
