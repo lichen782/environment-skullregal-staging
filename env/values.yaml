@@ -25,6 +25,14 @@ prow: {}
 global:
   keycloak:
     url: "http://activiti-keycloak.jx-staging.35.229.237.50.nip.io/auth"
+    realm: "activiti"
+    resource: "activiti"
+    client: "activiti"
+
+  gateway:
+    hostName: "activiti-cloud-gateway.jx-staging.35.229.237.50.nip.io"
+    host: "activiti-cloud-gateway.jx-staging.35.229.237.50.nip.io"
+
 
 infrastructure:
   activiti-keycloak:
