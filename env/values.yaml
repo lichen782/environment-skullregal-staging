@@ -34,7 +34,7 @@ global:
     host: "activiti-cloud-gateway.jx-staging.35.229.237.50.nip.io"
 
 activiti-keycloak:
-  enabled: false
+  enabled: true
   ingress:
     enabled: true
   keycloak:
@@ -45,7 +45,7 @@ activiti-keycloak:
         /opt/jboss/keycloak/bin/add-user-keycloak.sh -r master -u admin -p admin
         cp /realm/activiti-realm.json .
         sed -i 's/placeholder.com/*/g' activiti-realm.json
-  
+ 
 activiti-cloud-gateway:
   service:
     name: activiti-cloud-gateway
