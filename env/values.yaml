@@ -42,10 +42,6 @@ infrastructure:
               add_header Access-Control-Allow-Methods "POST, GET, OPTIONS, PUT, PATCH, DELETE";
               add_header Access-Control-Allow-Credentials true;
               add_header Access-Control-Allow-Headers "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization";
-        preStartScript:
-          /opt/jboss/keycloak/bin/add-user.sh -u admin -p admin
-          /opt/jboss/keycloak/bin/add-user-keycloak.sh -r master -u admin -p admin
-          cp /activiti-realm.json .
   activiti-cloud-gateway:
     ingress:
       enabled: true
